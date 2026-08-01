@@ -85,7 +85,10 @@
   z-index: 10;
   max-width: 80vw;
   white-space: normal;
+  touch-action: none;
+
 }
+
 
 @keyframes fly {
   0% { 
@@ -298,21 +301,69 @@
     message.className = "reason";
     message.innerHTML = "🌸 " + reasons[number] + " 🌸";
     
-    let randomTop = Math.floor(Math.random() * 60) + 15;
+    let randomTop = Math.floor(Math.random() * 50) + 20;
     message.style.top = randomTop + "%";
     
     document.body.appendChild(message);
     
+    // --- Touch & Drag Setup ---
+    let isDragging = false;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    // Functions to pause/start flying animation
+    function startDrag(e) {
+      isDragging = true;
+      message.style.animationPlayState = 'paused'; // Pauses flying when touched!
+      
+      let clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      let clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      
+      offsetX = clientX - message.getBoundingClientRect().left;
+      offsetY = clientY - message.getBoundingClientRect().top;
+    }
+
+    function moveDrag(e) {
+      if (!isDragging) return;
+      e.preventDefault(); // Stops screen scrolling while dragging message
+      
+      let clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      let clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      
+      message.style.left = (clientX - offsetX) + "px";
+      message.style.top = (clientY - offsetY) + "px";
+    }
+
+    function stopDrag() {
+      if (isDragging) {
+        isDragging = false;
+        // Resumes flying away when released!
+        message.style.animationPlayState = 'running'; 
+      }
+    }
+
+    // Touch Events (For Mobile Phone)
+    message.addEventListener("touchstart", startDrag, { passive: false });
+    window.addEventListener("touchmove", moveDrag, { passive: false });
+    window.addEventListener("touchend", stopDrag);
+
+    // Mouse Events (For Desktop testing)
+    message.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", moveDrag);
+    window.addEventListener("mouseup", stopDrag);
+
     number++;
     if (number >= reasons.length) {
       number = 0;
     }
 
+    // Removes message after it finishes flying away
     setTimeout(function() {
       message.remove();
-    }, 4500);
+    }, 6000);
   }
 </script>
+
 
 </body>
 </html>
