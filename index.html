@@ -1,18 +1,189 @@
-<div class="floating">💗</div>
-<div class="floating two">🧸</div>
-<div class="floating three">🌸</div>
-<div class="floating four">💖</div>
-<div class="floating five">🎀</div>
-<div class="container">
-
-<img src="images/teddy.png" class="teddy" alt="Cute Teddy">
-
+<!DOCTYPE html>
+<html>
+<head>
+<title>For My Favorite Person 💗</title>
+<style>
+body {
+margin:0;
+height:100vh;
+background:linear-gradient(#ffd6e7,#fff5fa);
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:cursive;
+overflow:hidden;
+}
+.card {
+background:white;
+width:330px;
+padding:30px;
+border-radius:35px;
+text-align:center;
+box-shadow:0 10px 30px pink;
+z-index:5;
+}
+h1 {
+color:#ff4f9a;
+}
+p {
+color:#555;
+font-size:18px;
+}
+button {
+background:#ff6fae;
+border:none;
+color:white;
+padding:15px 25px;
+border-radius:30px;
+font-size:18px;
+cursor:pointer;
+}
+button:active {
+transform:scale(0.95);
+}
+/* Teddy */
+.teddy {
+width:130px;
+height:130px;
+position:relative;
+margin:auto;
+}
+.head {
+width:100px;
+height:100px;
+background:#b87545;
+border-radius:50%;
+position:absolute;
+left:15px;
+top:20px;
+}
+.ear {
+width:35px;
+height:35px;
+background:#b87545;
+border-radius:50%;
+position:absolute;
+top:5px;
+}
+.left {
+left:10px;
+}
+.right {
+right:10px;
+}
+.eye {
+width:10px;
+height:10px;
+background:black;
+border-radius:50%;
+position:absolute;
+top:60px;
+}
+.eye1 {
+left:45px;
+}
+.eye2 {
+right:45px;
+}
+.nose {
+width:18px;
+height:14px;
+background:black;
+border-radius:50%;
+position:absolute;
+left:41px;
+top:78px;
+}
+/* Flying message */
+.reason {
+position:absolute;
+left:-350px;
+background:white;
+padding:15px 25px;
+border-radius:30px;
+color:#ff4f9a;
+font-size:18px;
+box-shadow:0 5px 20px pink;
+animation:fly 4s linear forwards;
+z-index:10;
+}
+@keyframes fly {
+from {
+left:-350px;
+}
+to {
+left:110%;
+}
+}
+/* Floating hearts */
+.heart {
+position:absolute;
+font-size:30px;
+animation:rise 7s linear infinite;
+bottom:-50px;
+}
+@keyframes rise {
+from {
+transform:translateY(0);
+opacity:1;
+}
+to {
+transform:translateY(-120vh);
+opacity:0;
+}
+}
+</style>
+</head>
+<body>
+<div class="card">
+<div class="teddy">
+<div class="ear left"></div>
+<div class="ear right"></div>
+<div class="head"></div>
+<div class="eye eye1"></div>
+<div class="eye eye2"></div>
+<div class="nose"></div>
+</div>
 <h1>Happy National Girlfriend Day 💗</h1>
-
-<p class="subtitle">
-For the prettiest girl ever ✨
+<p>
+To my favorite person 🥹<br><br>
+You make my days brighter,
+my smiles bigger,
+and my heart happier 💕
 </p>
-
-<button id="loveButton">
-💖 Open My Heart 💖
+<button onclick="showReason()">
+Click me 💗
 </button>
+</div>
+<div class="heart" style="left:10%;animation-delay:0s;">💗</div>
+<div class="heart" style="left:30%;animation-delay:2s;">💕</div>
+<div class="heart" style="left:60%;animation-delay:4s;">❤️</div>
+<div class="heart" style="left:85%;animation-delay:1s;">💞</div>
+<script>
+let reasons = [
+"You always know how to make me smile 💕",
+"I love how caring your heart is 🥹",
+"You make my days feel special ✨",
+"I love your personality 💗",
+"I love every moment we spend talking ❤️",
+"You make me happy just by being you 🧸",
+"I love your beautiful smile 😊"
+];
+let number = 0;
+function showReason(){
+let message = document.createElement("div");
+message.className="reason";
+message.innerHTML="💗 "+reasons[number]+" 💗";
+message.style.top = Math.floor(Math.random()*70)+"%";
+document.body.appendChild(message);
+number++;
+if(number >= reasons.length){
+number=0;
+}
+setTimeout(function(){
+message.remove();
+},4000);
+}
+</script>
+</body>
+</html>
